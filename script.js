@@ -1,5 +1,5 @@
 const player = document.querySelector('.player');
-const video = player.querySelector('.viewer');
+const video = player.querySelector('.player__video');
 
 const progress = player.querySelector('.progress');
 const progressFilled = player.querySelector('.progress__filled');
@@ -7,13 +7,11 @@ const progressFilled = player.querySelector('.progress__filled');
 const toggle = player.querySelector('.toggle');
 
 const sliders = player.querySelectorAll('.player__slider');
-
 const skipButtons = player.querySelectorAll('[data-skip]');
 
 
-// Toggle Play/Pause
+// ▶️ Play / Pause toggle
 function togglePlay() {
-
   if (video.paused) {
     video.play();
   } else {
@@ -22,68 +20,62 @@ function togglePlay() {
 }
 
 
-// Update Button
+// 🔁 Update play/pause button text
 function updateButton() {
-
   toggle.textContent = video.paused ? '►' : '❚ ❚';
 }
 
 
-// Skip
+// ⏪ ⏩ Skip buttons
 function skip() {
-
   video.currentTime += parseFloat(this.dataset.skip);
 }
 
 
-// Handle Range Inputs
+// 🎚️ Volume + Speed control
 function handleRangeUpdate() {
-
   video[this.name] = this.value;
 }
 
 
-// Update Progress Bar
+// 📊 Progress bar update
 function handleProgress() {
-
-  const percent =
-    (video.currentTime / video.duration) * 100;
-
+  const percent = (video.currentTime / video.duration) * 100;
   progressFilled.style.flexBasis = `${percent}%`;
 }
 
 
-// Scrub
+// 🎯 Scrub video on progress bar click
 function scrub(e) {
-
-  const scrubTime =
-    (e.offsetX / progress.offsetWidth) * video.duration;
-
+  const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
   video.currentTime = scrubTime;
 }
 
 
-// Event Listeners
+// =====================
+// EVENT LISTENERS
+// =====================
+
+// Play/Pause
 video.addEventListener('click', togglePlay);
-
-video.addEventListener('play', updateButton);
-
-video.addEventListener('pause', updateButton);
-
-video.addEventListener('timeupdate', handleProgress);
-
 toggle.addEventListener('click', togglePlay);
 
+// Update button icon
+video.addEventListener('play', updateButton);
+video.addEventListener('pause', updateButton);
+
+// Progress bar update
+video.addEventListener('timeupdate', handleProgress);
+
+// Skip buttons
 skipButtons.forEach(button =>
   button.addEventListener('click', skip)
 );
 
+// Sliders (volume + speed)
 sliders.forEach(slider =>
-  slider.addEventListener('change', handleRangeUpdate)
+  slider.addEventListener('input', handleRangeUpdate)
 );
 
-sliders.forEach(slider =>
-  slider.addEventListener('mousemove', handleRangeUpdate)
-);
-
+// Progress bar click
 progress.addEventListener('click', scrub);

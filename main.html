@@ -10,7 +10,8 @@
 
 <div class="player">
 
-  <video class="viewer"
+  <!-- VIDEO (IMPORTANT: correct class name) -->
+  <video class="player__video"
     src="https://www.w3schools.com/html/mov_bbb.mp4">
   </video>
 
@@ -22,23 +23,23 @@
   <!-- Controls -->
   <div class="player__controls">
 
-    <!-- Play Pause -->
+    <!-- Play / Pause -->
     <button class="player__button toggle">►</button>
 
     <!-- Rewind -->
-    <button data-skip="-10" class="player__button">
+    <button data-skip="-10" class="player__button rewind">
       « 10s
     </button>
 
     <!-- Forward -->
-    <button data-skip="25" class="player__button">
+    <button data-skip="25" class="player__button forward">
       25s »
     </button>
 
     <!-- Volume -->
     <input type="range"
       name="volume"
-      class="player__slider"
+      class="player__slider volume"
       min="0"
       max="1"
       step="0.05"
@@ -47,7 +48,7 @@
     <!-- Playback Speed -->
     <input type="range"
       name="playbackRate"
-      class="player__slider"
+      class="player__slider playbackRate"
       min="0.5"
       max="2"
       step="0.1"
